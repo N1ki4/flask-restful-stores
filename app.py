@@ -17,8 +17,8 @@ app.secret_key="nick"
 api = Api(app)
 
 
-jwt = JWT(app, authenticate, identity) # /auth
-
+## auth made by JWT, with "/auth" endpoint
+jwt = JWT(app, authenticate, identity) 
 
 api.add_resource(StoreList, "/stores")
 api.add_resource(Store, "/store/<string:name>")

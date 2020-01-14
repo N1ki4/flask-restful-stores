@@ -25,7 +25,7 @@ class Store(Resource):
 		if store:
 			store.delete_from_db()
 
-		return {"message": "Store deleted."}
+		return {"message": "Store deleted."}, 204
 
 
 class StoreList(Resource):
