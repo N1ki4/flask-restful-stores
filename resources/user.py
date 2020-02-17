@@ -4,26 +4,24 @@ from models.user import UserModel
 
 
 class UserRegister(Resource):
-
 	parser = reqparse.RequestParser()
 	parser.add_argument("username",
-				type=str,
-				required=True,
-				help="Username cant be blank!"
-	)
+						type=str,
+						required=True,
+						help="Username cant be blank!"
+						)
 	parser.add_argument("password",
-				type=str,
-				required=True,
-				help="Password cant be blank!"
-	)
+						type=str,
+						required=True,
+						help="Password cant be blank!"
+						)
 
 	def post(self):
 		data = UserRegister.parser.parse_args()
-		## Preventing duplicate usernames
 		if UserModel.find_by_username(data["username"]):
-			return {"message":"A user with that username already exists"}, 400
+			return {"message": "A user with that username already exists"}, 400
 
-		user = UserModel(**data) ## data["username"], data["password"]
+		user = UserModel(**data)  # data["username"], data["password"]
 		user.save_to_db()
 
 		return {"message": "User created!"}, 201

@@ -2,9 +2,9 @@ import os
 
 from flask import Flask
 from flask_restful import Api
-from flask_jwt import JWT
+from flask_jwt import JWT, JWTError
 
-#from db import db
+from db import db
 
 from security import authenticate, identity
 from resources.user import UserRegister
@@ -13,16 +13,13 @@ from resources.store import Store, StoreList
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL",
-													   "sqlite:///data.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key="nick"
+app.secret_key = "nick"
 api = Api(app)
 
 
-## auth made by JWT, with "/auth" endpoint
-jwt = JWT(app, authenticate, identity) 
-
+jwt = JWT(app, authenticate, identity)  # auth
 api.add_resource(StoreList, "/stores")
 api.add_resource(Store, "/store/<string:name>")
 api.add_resource(ItemList, "/items")
