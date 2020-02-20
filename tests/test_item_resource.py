@@ -17,13 +17,14 @@ class ItemTest(BaseTest):
 				self.assertDictEqual({'name': 'test_item', 'price': 88.99, 'store_id': 1},
 									 json.loads(response.data))
 
-	"""
 	def test_get_item_no_auth(self):
-			with self.app() as client:
-				with self.app_context():
-					response = client.get('/item/test')
-					self.assertEqual(response.status_code, 500)
-	"""
+		with self.app() as client:
+			with self.app_context():
+				response = client.get('/item/test')
+
+				self.assertEqual(response.status_code, 401)
+				self.assertDictEqual({'message': 'Authorization Required. Request does not contain an access token'},
+									 json.loads(response.data))
 
 	def test_item_not_found(self):
 		with self.app() as client:
