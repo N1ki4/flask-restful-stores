@@ -1,7 +1,7 @@
 """
 Base Test Class
 
-This class must be parent of each non unit test.
+This class must be parent of each test.
 This class creates database and cleans it after tests passed.
 """
 from unittest import TestCase

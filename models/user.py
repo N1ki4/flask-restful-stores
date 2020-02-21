@@ -1,4 +1,3 @@
-import sqlite3
 from db import db
 
 
@@ -9,7 +8,7 @@ class UserModel(db.Model):
 	username = db.Column(db.String(80))
 	password = db.Column(db.String(80))
 
-	def __init__(self, username, password):
+	def __init__(self, username: str, password: str):
 		self.username = username
 		self.password = password
 
@@ -18,9 +17,9 @@ class UserModel(db.Model):
 		db.session.commit()
 
 	@classmethod
-	def find_by_username(cls, username):
+	def find_by_username(cls, username: str):
 		return cls.query.filter_by(username=username).first()
 
 	@classmethod
-	def find_by_id(cls, _id):
+	def find_by_id(cls, _id: int):
 		return cls.query.filter_by(id=_id).first()

@@ -1,3 +1,4 @@
+from typing import Dict
 from db import db
 
 
@@ -8,17 +9,17 @@ class StoreModel(db.Model):
 	name = db.Column(db.String(80))
 	items = db.relationship("ItemModel", lazy="dynamic")
 
-	def __init__(self, name):
+	def __init__(self, name: str):
 		self.name = name
 
-	def json(self):
+	def json(self) -> Dict:
 		return {
 				"name": self.name,
 				"items": [i.json() for i in self.items.all()]
 		}
 
 	@classmethod
-	def find_by_name(cls, name):
+	def find_by_name(cls, name: str):
 		return cls.query.filter_by(name=name).first()
 
 	def save_to_db(self):
