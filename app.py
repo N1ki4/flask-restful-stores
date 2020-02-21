@@ -13,9 +13,11 @@ from resources.store import Store, StoreList
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", "sqlite:///data.db"
+)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config["PROPAGATE_EXCEPTIONS"] = True
 app.secret_key = "nick"
 api = Api(app)
 
@@ -29,7 +31,14 @@ api.add_resource(UserRegister, "/register")
 
 @app.errorhandler(JWTError)
 def auth_error(err):
-    return jsonify({'message': 'Authorization Required. Request does not contain an access token'}), 401
+    return (
+        jsonify(
+            {
+                "message": "Authorization Required. Request does not contain an access token"
+            }
+        ),
+        401,
+    )
 
 
 if __name__ == "__main__":

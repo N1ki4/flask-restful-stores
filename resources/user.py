@@ -3,24 +3,20 @@ from models.user import UserModel
 
 
 class UserRegister(Resource):
-	parser = reqparse.RequestParser()
-	parser.add_argument("username",
-						type=str,
-						required=True,
-						help="Username cant be blank!"
-						)
-	parser.add_argument("password",
-						type=str,
-						required=True,
-						help="Password cant be blank!"
-						)
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        "username", type=str, required=True, help="Username cant be blank!"
+    )
+    parser.add_argument(
+        "password", type=str, required=True, help="Password cant be blank!"
+    )
 
-	def post(self):
-		data = UserRegister.parser.parse_args()
-		if UserModel.find_by_username(data["username"]):
-			return {"message": "A user with that username already exists"}, 400
+    def post(self):
+        data = UserRegister.parser.parse_args()
+        if UserModel.find_by_username(data["username"]):
+            return {"message": "A user with that username already exists"}, 400
 
-		user = UserModel(**data)  # data["username"], data["password"]
-		user.save_to_db()
+        user = UserModel(**data)  # data["username"], data["password"]
+        user.save_to_db()
 
-		return {"message": "User created!"}, 201
+        return {"message": "User created!"}, 201
